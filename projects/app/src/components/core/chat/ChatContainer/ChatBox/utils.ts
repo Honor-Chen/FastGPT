@@ -42,6 +42,11 @@ export const formatChatValue2InputType = (value?: ChatItemValueItemType[]): Chat
   };
 };
 
+/**
+ * !!::: 检查最近一次对话是否是交互模式
+ * @param chatHistories 包含最近完成对话的历史记录
+ * @returns boolean
+ */
 export const checkIsInteractiveByHistories = (chatHistories: ChatSiteItemType[]) => {
   const lastAIHistory = chatHistories[chatHistories.length - 1];
   if (!lastAIHistory) return false;

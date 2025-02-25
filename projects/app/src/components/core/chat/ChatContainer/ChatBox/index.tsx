@@ -197,6 +197,11 @@ const ChatBox = ({
     }
   );
 
+  /**
+   * !!::监听 stream fetch 方法推送消息的回调方法
+   * !!::监听 stream fetch 方法推送消息的回调方法
+   * !!::监听 stream fetch 方法推送消息的回调方法
+   */
   const generatingMessage = useMemoizedFn(
     ({
       event,
@@ -347,7 +352,7 @@ const ChatBox = ({
     }, 100);
   });
 
-  // create question guide
+  // create question guide 创建问题指导
   const createQuestionGuide = useCallback(async () => {
     if (!questionGuide.open || chatController.current?.signal?.aborted) return;
     try {
@@ -380,7 +385,8 @@ const ChatBox = ({
   });
 
   /**
-   * user confirm send prompt
+   * !!::用户真正发送信息的地方
+   * !!::user confirm send prompt
    */
   const sendPrompt: SendPromptFnType = useMemoizedFn(
     ({
@@ -436,6 +442,7 @@ const ChatBox = ({
             setAudioPlayingChatId(responseChatId);
           }
 
+          // **一对会话记录（包括新增的会话，此时 ChatRoleEnum.AI 的 status: ChatStatusEnum.loading）
           const newChatList: ChatSiteItemType[] = [
             ...history,
             {
@@ -481,7 +488,9 @@ const ChatBox = ({
             }
           ];
 
+          // console.log('🌐 ~ async({variables ~ newChatList:', newChatList);
           // Update histories(Interactive input does not require new session rounds)
+          // 更新历史记录（交互式输入不需要新的会话回合）
           setChatRecords(
             isInteractivePrompt
               ? // 把交互的结果存储到对话记录中，交互模式下，不需要新的会话轮次
@@ -523,6 +532,8 @@ const ChatBox = ({
                 status: 'error'
               });
             }
+            // console.log('🌐 ~ async({variables ~ responseData:', responseData);
+            // console.log('🌐 ~ async({variables ~ responseText:', responseText);
 
             // Set last chat finish status
             let newChatHistories: ChatSiteItemType[] = [];
@@ -538,10 +549,12 @@ const ChatBox = ({
                     : responseData
                 };
               });
+              // console.log('🌐 ~ setChatRecords ~ newChatHistories:', newChatHistories);
               return newChatHistories;
             });
 
             setTimeout(() => {
+              // console.log(!checkIsInteractiveByHistories(newChatHistories));
               if (!checkIsInteractiveByHistories(newChatHistories)) {
                 createQuestionGuide();
               }
@@ -789,6 +802,7 @@ const ChatBox = ({
     };
   });
 
+  // !!::新对话空白页判断逻辑
   const showEmpty = useMemo(
     () =>
       feConfigs?.show_emptyChat &&
@@ -892,6 +906,8 @@ const ChatBox = ({
   }));
 
   const RenderRecords = useMemo(() => {
+    // console.log('🌐 ~ RenderRecords ~ chatRecords:', chatRecords);
+
     return (
       <ScrollData
         ScrollContainerRef={ScrollContainerRef}
@@ -906,10 +922,11 @@ const ChatBox = ({
           {showEmpty && <Empty />}
           {!!welcomeText && <WelcomeBox welcomeText={welcomeText} />}
           {/* variable input */}
+          {/* TODO:: 开始对话，未查到具体展示页面（还是一个助理对话提示） */}
           {!!variableList?.length && (
             <VariableInput chatStarted={chatStarted} chatForm={chatForm} />
           )}
-          {/* chat history */}
+          {/* chat history 历史聊天记录容器 */}
           <Box id={'history'}>
             {chatRecords.map((item, index) => (
               <Box key={item.dataId}>
@@ -951,11 +968,13 @@ const ChatBox = ({
                         onReadUserDislike: onReadUserDislike(item)
                       }}
                     >
+                      {/* +++++++++++++++++++++++++++++++++++ 会话Item，下方相关内容（包括：引用、反馈、纠正） +++++++++++++++++++++++++++++++++++ */}
+                      {/* 引用相关文件 */}
                       <ResponseTags
                         showTags={index !== chatRecords.length - 1 || !isChatting}
                         historyItem={item}
                       />
-                      {/* custom feedback */}
+                      {/* custom feedback 自定义反馈内容 */}
                       {item.customFeedbacks && item.customFeedbacks.length > 0 && (
                         <Box>
                           <ChatBoxDivider
@@ -978,7 +997,7 @@ const ChatBox = ({
                           ))}
                         </Box>
                       )}
-                      {/* admin mark content */}
+                      {/* admin mark content 纠正后的回复 */}
                       {showMarkIcon && item.adminFeedback && (
                         <Box fontSize={'sm'}>
                           <ChatBoxDivider
@@ -1037,7 +1056,8 @@ const ChatBox = ({
       <Script src={getWebReqUrl('/js/html2pdf.bundle.min.js')} strategy="lazyOnload"></Script>
       {/* chat box container */}
       {RenderRecords}
-      {/* message input */}
+      {/* message input 聊天输入框 */}
+      {/* 当对话AI是交换类型（isInteractive）时，需将 ChatInput 组件隐藏 */}
       {onStartChat && chatStarted && active && !isInteractive && (
         <ChatInput
           onSendMessage={sendPrompt}
@@ -1047,7 +1067,7 @@ const ChatBox = ({
           chatForm={chatForm}
         />
       )}
-      {/* user feedback modal */}
+      {/* user feedback modal 弹框：结果反馈-反馈者 */}
       {!!feedbackId && chatId && (
         <FeedbackModal
           appId={appId}
@@ -1064,7 +1084,7 @@ const ChatBox = ({
           }}
         />
       )}
-      {/* admin read feedback modal */}
+      {/* admin read feedback modal 弹框：结果反馈-查看者 */}
       {!!readFeedbackData && (
         <ReadFeedbackModal
           content={readFeedbackData.content}
@@ -1089,7 +1109,7 @@ const ChatBox = ({
           }}
         />
       )}
-      {/* admin mark data */}
+      {/* admin mark data 弹框：预期标准回答，相关弹框操作 */}
       {!!adminMarkData && (
         <SelectMarkCollection
           adminMarkData={adminMarkData}

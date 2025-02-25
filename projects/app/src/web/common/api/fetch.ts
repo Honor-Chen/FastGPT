@@ -51,7 +51,7 @@ export const streamFetch = ({
     let responseText = '';
     let responseQueue: ResponseQueueItemType[] = [];
     let errMsg: string | undefined;
-    let responseData: ChatHistoryItemResType[] = [];
+    let responseData: ChatHistoryItemResType[] = []; // * 存储的是 SseResponseEventEnum.flowResponses 返回的数据
     let finished = false;
 
     const finish = () => {

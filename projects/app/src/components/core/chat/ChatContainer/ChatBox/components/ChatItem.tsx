@@ -65,6 +65,11 @@ ${JSON.stringify(questionGuides)}`}
   );
 };
 
+/**
+ * !!+++++++++++++++++++++++++++++++++++
+ * TODO::Human 输入内容（包括：文字|上传的文件）
+ * !!+++++++++++++++++++++++++++++++++++
+ */
 const HumanContentCard = React.memo(
   function HumanContentCard({ chatValue }: { chatValue: ChatItemValueItemType[] }) {
     const { text, files = [] } = formatChatValue2InputType(chatValue);
@@ -77,6 +82,12 @@ const HumanContentCard = React.memo(
   },
   (prevProps, nextProps) => isEqual(prevProps.chatValue, nextProps.chatValue)
 );
+
+/**
+ * !!+++++++++++++++++++++++++++++++++++
+ * TODO::AI回答内容
+ * !!+++++++++++++++++++++++++++++++++++
+ */
 const AIContentCard = React.memo(function AIContentCard({
   chatValue,
   dataId,
@@ -152,7 +163,9 @@ const ChatItem = (props: Props) => {
 
   /* 
     1. The interactive node is divided into n dialog boxes.
+    1. 交互节点为n个对话盒子
     2. Auto-complete the last textnode
+    2. 自动补全最后一个文本节点
   */
   const splitAiResponseResults = useMemo(() => {
     if (chat.obj !== ChatRoleEnum.AI) return [chat.value];
@@ -216,7 +229,8 @@ const ChatItem = (props: Props) => {
         }
       }}
     >
-      {/* control icon */}
+      {/* +++++++++++++++++++++++++++++++++++ 会话Item头部展示 +++++++++++++++++++++++++++++++++++ */}
+      {/* control icon 控制按钮 */}
       <Flex w={'100%'} alignItems={'center'} gap={2} justifyContent={styleMap.justifyContent}>
         {isChatting && type === ChatRoleEnum.AI && isLastChild ? null : (
           <Flex order={styleMap.order} ml={styleMap.ml} align={'center'} gap={'0.62rem'}>
@@ -239,7 +253,7 @@ const ChatItem = (props: Props) => {
         )}
         <ChatAvatar src={avatar} type={type} />
 
-        {/* Workflow status */}
+        {/* Workflow status 工作流过程状态展示 */}
         {!!chatStatusMap && statusBoxData && isLastChild && showNodeStatus && (
           <Flex
             alignItems={'center'}
@@ -263,6 +277,7 @@ const ChatItem = (props: Props) => {
           </Flex>
         )}
       </Flex>
+      {/* +++++++++++++++++++++++++++++++++++ 会话Item内容展示 +++++++++++++++++++++++++++++++++++ */}
       {/* content */}
       {splitAiResponseResults.map((value, i) => (
         <Box
@@ -293,6 +308,7 @@ const ChatItem = (props: Props) => {
               />
             )}
             {/* Example: Response tags. A set of dialogs only needs to be displayed once*/}
+            {/* 示例：响应标签。一组对话框（QA对）只需要显示一次 */}
             {i === splitAiResponseResults.length - 1 && <>{children}</>}
             {/* 对话框底部的复制按钮 */}
             {type == ChatRoleEnum.AI &&

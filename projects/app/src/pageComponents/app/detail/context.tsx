@@ -63,6 +63,7 @@ export const AppContext = createContext<AppContextType>({
   route2Tab: function (currentTab: TabEnum): void {
     throw new Error('Function not implemented.');
   },
+  // * 工作台-某个应用信息（包括：简易应用、工作流、插件）
   appDetail: defaultApp,
   loadingApp: false,
   updateAppDetail: function (data: AppUpdateParams): Promise<void> {

@@ -1,5 +1,5 @@
-import { jsonRes } from '../response';
 import type { NextApiResponse } from 'next';
+import { jsonRes } from '../response';
 import { withNextCors } from './cors';
 import { ApiRequestProps } from '../../type/next';
 import { addLog } from '../system/log';
@@ -16,6 +16,7 @@ export const NextEntry = ({ beforeCallback = [] }: { beforeCallback?: Promise<an
       addLog.debug(`Request start ${req.url}`);
 
       try {
+        // withNextCors 函数（用于处理CORS）
         await Promise.all([withNextCors(req, res), ...beforeCallback]);
 
         let response = null;

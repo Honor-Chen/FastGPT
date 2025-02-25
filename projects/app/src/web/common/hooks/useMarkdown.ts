@@ -1,6 +1,7 @@
 import { getWebReqUrl } from '@fastgpt/web/common/system/utils';
 import { useQuery } from '@tanstack/react-query';
 
+// * 从 docs 目录获取 md 文件内容
 export const getMd = async (url: string) => {
   const response = await fetch(getWebReqUrl(`/docs/${url}`));
   const textContent = await response.text();

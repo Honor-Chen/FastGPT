@@ -1,14 +1,15 @@
+import { exit } from 'process';
 import { PRICE_SCALE } from '@fastgpt/global/support/wallet/constants';
 import { MongoUser } from '@fastgpt/service/support/user/schema';
 import { connectMongo } from '@fastgpt/service/common/mongo/init';
 import { hashStr } from '@fastgpt/global/common/string/tools';
 import { createDefaultTeam } from '@fastgpt/service/support/user/team/controller';
-import { exit } from 'process';
 import { mongoSessionRun } from '@fastgpt/service/common/mongo/sessionRun';
 
 /**
  * This function is equivalent to the entry to the service
  * connect MongoDB and init data
+ * 此函数相当于连接MongoDB和init数据的服务条目
  */
 export function connectToDatabase() {
   return connectMongo();
@@ -16,9 +17,7 @@ export function connectToDatabase() {
 
 export async function initRootUser(retry = 3): Promise<any> {
   try {
-    const rootUser = await MongoUser.findOne({
-      username: 'root'
-    });
+    const rootUser = await MongoUser.findOne({ username: 'root' });
     const psw = process.env.DEFAULT_ROOT_PSW || '123456';
 
     let rootId = rootUser?._id || '';
@@ -45,10 +44,7 @@ export async function initRootUser(retry = 3): Promise<any> {
       await createDefaultTeam({ userId: rootId, session });
     });
 
-    console.log(`root user init:`, {
-      username: 'root',
-      password: psw
-    });
+    console.log(`root user init:`, { username: 'root', password: psw });
   } catch (error) {
     if (retry > 0) {
       console.log('retry init root user');

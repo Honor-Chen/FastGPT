@@ -6,6 +6,3 @@
 - [计费规则](https://doc.tryfastgpt.ai/docs/pricing/)
 
 **其他问题**
-| 扫码进入交流群 |
-| ----------------------- |
-| ![](https://oss.laf.run/otnvvf-imgs/fastgpt-feishu1.png) |

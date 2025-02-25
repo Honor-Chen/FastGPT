@@ -29,5 +29,15 @@
         "/docSite/content/**/*": "${documentWorkspaceFolder}/docSite/assets/imgs/"
     },
     "markdown.copyFiles.overwriteBehavior": "nameIncrementally",
-    "markdown.copyFiles.transformPath": "const filename = uri.path.split('/').pop(); return `/imgs/${filename}`;"
+    "markdown.copyFiles.transformPath": "const filename = uri.path.split('/').pop(); return `/imgs/${filename}`;",
+    "[dotenv]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    },
+    "marscode.codeCompletionPro": {
+        "enableCodeCompletionPro": false
+    },
+    "marscode.enableInlineCommand": true,
+    "[shellscript]": {
+        "editor.defaultFormatter": "foxundermoon.shell-format"
+    }
 }

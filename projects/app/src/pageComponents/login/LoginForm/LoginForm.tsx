@@ -33,12 +33,7 @@ const LoginForm = ({ setPageType, loginSuccess }: Props) => {
 
   const { runAsync: onclickLogin, loading: requesting } = useRequest2(
     async ({ username, password }: LoginFormType) => {
-      loginSuccess(
-        await postLogin({
-          username,
-          password
-        })
-      );
+      loginSuccess(await postLogin({ username, password }));
       toast({
         title: t('login:login_success'),
         status: 'success'
@@ -83,6 +78,7 @@ const LoginForm = ({ setPageType, loginSuccess }: Props) => {
           <Input
             bg={'myGray.50'}
             size={'lg'}
+            value={'root'}
             placeholder={placeholder}
             {...register('username', {
               required: true
@@ -94,6 +90,7 @@ const LoginForm = ({ setPageType, loginSuccess }: Props) => {
             bg={'myGray.50'}
             size={'lg'}
             type={'password'}
+            value={'123456'}
             placeholder={
               isCommunityVersion
                 ? t('login:root_password_placeholder')
@@ -101,10 +98,7 @@ const LoginForm = ({ setPageType, loginSuccess }: Props) => {
             }
             {...register('password', {
               required: true,
-              maxLength: {
-                value: 60,
-                message: t('login:password_condition')
-              }
+              maxLength: { value: 60, message: t('login:password_condition') }
             })}
           ></Input>
         </FormControl>

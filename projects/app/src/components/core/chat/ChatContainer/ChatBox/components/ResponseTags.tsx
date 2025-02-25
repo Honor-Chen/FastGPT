@@ -94,7 +94,7 @@ const ResponseTags = ({
 
   return !showTags ? null : (
     <>
-      {/* quote */}
+      {/* quote 引用相关文件展示 */}
       {sourceList.length > 0 && (
         <>
           <Flex justifyContent={'space-between'} alignItems={'center'}>
@@ -135,6 +135,7 @@ const ResponseTags = ({
                 : {}
             }
           >
+            {/* 查看引用 */}
             {sourceList.map((item) => {
               return (
                 <MyTooltip key={item.collectionId} label={t('common:core.chat.quote.Read Quote')}>
@@ -188,8 +189,10 @@ const ResponseTags = ({
         </>
       )}
 
+      {/* 标签不为空时 */}
       {notEmptyTags && (
         <Flex alignItems={'center'} mt={3} flexWrap={'wrap'} gap={2}>
+          {/* {{num}}条引用 */}
           {quoteList.length > 0 && (
             <MyTooltip label={t('chat:view_citations')}>
               <MyTag
@@ -202,6 +205,7 @@ const ResponseTags = ({
               </MyTag>
             </MyTooltip>
           )}
+          {/* {{num}}条上下文 */}
           {llmModuleAccount === 1 && notSharePage && (
             <>
               {historyPreviewLength > 0 && (
@@ -218,11 +222,13 @@ const ResponseTags = ({
               )}
             </>
           )}
+          {/* 多组AI对话 */}
           {llmModuleAccount > 1 && notSharePage && (
             <MyTag type="borderSolid" colorSchema="blue">
               {t('chat:multiple_AI_conversations')}
             </MyTag>
           )}
+          {/* 工作流总运行时间 */}
           {isPc && runningTime > 0 && (
             <MyTooltip label={t('chat:module_runtime_and')}>
               <MyTag colorSchema="purple" type="borderSolid" cursor={'default'}>
@@ -230,7 +236,7 @@ const ResponseTags = ({
               </MyTag>
             </MyTooltip>
           )}
-
+          {/* 查看详情 */}
           {notSharePage && (
             <MyTooltip label={t('common:core.chat.response.Read complete response tips')}>
               <MyTag

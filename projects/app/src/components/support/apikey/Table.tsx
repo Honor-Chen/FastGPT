@@ -48,6 +48,11 @@ const defaultEditData: EditProps = {
   }
 };
 
+/**
+ * ===================================================
+ * API 密钥管理
+ * ===================================================
+ */
 const ApiKeyTable = ({ tips, appId }: { tips: string; appId?: string }) => {
   const { t } = useTranslation();
   const theme = useTheme();

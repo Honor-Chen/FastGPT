@@ -1,8 +1,9 @@
 import type { NextApiResponse } from 'next';
-import { ApiRequestProps } from '@fastgpt/service/type/next';
-import { NextAPI } from '@/service/middleware/entry';
-import { InitDateResponse } from '@/global/common/api/systemRes';
 import { SystemModelItemType } from '@fastgpt/service/core/ai/type';
+import { ApiRequestProps } from '@fastgpt/service/type/next';
+
+import { InitDateResponse } from '@/global/common/api/systemRes';
+import { NextAPI } from '@/service/middleware/entry';
 
 async function handler(
   req: ApiRequestProps<{}, { bufferId?: string }>,

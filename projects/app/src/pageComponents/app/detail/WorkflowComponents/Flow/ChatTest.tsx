@@ -28,6 +28,13 @@ type Props = {
   onClose: () => void;
 };
 
+/**
+ * !!::工作流-运行-运行预览（聊天框）
+ * !!::工作流-运行-运行预览（聊天框）
+ * !!::工作流-运行-运行预览（聊天框）
+ * @param param0
+ * @returns
+ */
 const ChatTest = ({ isOpen, nodes = [], edges = [], onClose }: Props) => {
   const { t } = useTranslation();
   const { appDetail } = useContextSelector(AppContext, (v) => v);

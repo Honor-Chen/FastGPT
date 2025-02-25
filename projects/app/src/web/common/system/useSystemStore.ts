@@ -16,6 +16,7 @@ import { SubPlanType } from '@fastgpt/global/support/wallet/sub/type';
 import { ModelTypeEnum } from '@fastgpt/global/core/ai/model';
 import { TeamErrEnum } from '@fastgpt/global/common/error/code/team';
 import { SystemDefaultModelType } from '@fastgpt/service/core/ai/type';
+import { delay } from '@fastgpt/global/common/system/utils';
 
 type LoginStoreType = { provider: `${OAuthEnum}`; lastRoute: string; state: string };
 
@@ -104,16 +105,13 @@ export const useSystemStore = create<State>()(
           return null;
         },
 
-        gitStar: 15600,
+        gitStar: 0,
         async loadGitStar() {
           if (!get().feConfigs?.show_git) return;
-          try {
-            const { data: git } = await axios.get('https://api.github.com/repos/labring/FastGPT');
-
-            set((state) => {
-              state.gitStar = git.stargazers_count;
-            });
-          } catch (error) {}
+          await delay(1000);
+          set((state) => {
+            state.gitStar = 1024;
+          });
         },
 
         notSufficientModalType: undefined,

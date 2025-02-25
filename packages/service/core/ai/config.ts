@@ -4,9 +4,10 @@ import {
   ChatCompletionCreateParamsStreaming
 } from '@fastgpt/global/core/ai/type';
 import { getErrText } from '@fastgpt/global/common/error/utils';
+import { OpenaiAccountType } from '@fastgpt/global/support/user/team/type';
+
 import { addLog } from '../../common/system/log';
 import { i18nT } from '../../../web/i18n/utils';
-import { OpenaiAccountType } from '@fastgpt/global/support/user/team/type';
 import { getLLMModel } from './model';
 
 export const openaiBaseUrl = process.env.OPENAI_BASE_URL || 'https://api.openai.com/v1';
@@ -16,6 +17,7 @@ export const getAIApi = (props?: { userKey?: OpenaiAccountType; timeout?: number
 
   const baseUrl = userKey?.baseUrl || global?.systemEnv?.oneapiUrl || openaiBaseUrl;
   const apiKey = userKey?.key || global?.systemEnv?.chatApiKey || process.env.CHAT_API_KEY || '';
+  // console.log('🌐 ~ getAIApi ~ baseUrl:', baseUrl, '🌐 apiKey:', apiKey);
 
   return new OpenAI({
     baseURL: baseUrl,

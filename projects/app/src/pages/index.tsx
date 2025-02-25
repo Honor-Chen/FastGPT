@@ -1,7 +1,7 @@
-import { serviceSideProps } from '@fastgpt/web/common/system/nextjs';
 import React, { useEffect } from 'react';
-import Loading from '@fastgpt/web/components/common/MyLoading';
 import { useRouter } from 'next/router';
+import { serviceSideProps } from '@fastgpt/web/common/system/nextjs';
+import Loading from '@fastgpt/web/components/common/MyLoading';
 
 const index = () => {
   const router = useRouter();

@@ -45,6 +45,11 @@ type props = {
 
 const onSendPrompt: SendPromptFnType = (e) => eventBus.emit(EventNameEnum.sendQuestion, e);
 
+/**
+ * !!++++++++++++++++++++++++++++++++++++++++++++++++
+ * !! 渲染文本
+ * !!++++++++++++++++++++++++++++++++++++++++++++++++
+ */
 const RenderText = React.memo(function RenderText({
   showAnimation,
   text
@@ -58,6 +63,12 @@ const RenderText = React.memo(function RenderText({
 
   return <Markdown source={source} showAnimation={showAnimation} />;
 });
+
+/**
+ * !!++++++++++++++++++++++++++++++++++++++++++++++++
+ * !! 渲染工具
+ * !!++++++++++++++++++++++++++++++++++++++++++++++++
+ */
 const RenderTool = React.memo(
   function RenderTool({
     showAnimation,
@@ -140,6 +151,12 @@ ${toolResponse}`}
   },
   (prevProps, nextProps) => isEqual(prevProps, nextProps)
 );
+
+/**
+ * !!++++++++++++++++++++++++++++++++++++++++++++++++
+ * !! 渲染推理过程
+ * !!++++++++++++++++++++++++++++++++++++++++++++++++
+ */
 const RenderResoningContent = React.memo(function RenderResoningContent({
   content,
   isChatting,
@@ -192,6 +209,12 @@ const RenderResoningContent = React.memo(function RenderResoningContent({
     </Accordion>
   );
 });
+
+/**
+ * !!++++++++++++++++++++++++++++++++++++++++++++++++
+ * !! 渲染交互-选择
+ * !!++++++++++++++++++++++++++++++++++++++++++++++++
+ */
 const RenderUserSelectInteractive = React.memo(function RenderInteractive({
   interactive
 }: {
@@ -235,14 +258,22 @@ const RenderUserSelectInteractive = React.memo(function RenderInteractive({
     </>
   );
 });
+
+/**
+ * !!++++++++++++++++++++++++++++++++++++++++++++++++
+ * !! 渲染交互-表单
+ * !!++++++++++++++++++++++++++++++++++++++++++++++++
+ */
 const RenderUserFormInteractive = React.memo(function RenderFormInput({
   interactive
 }: {
   interactive: InteractiveBasicType & UserInputInteractive;
 }) {
+  // console.log('🌐 ~ interactive:', interactive);
   const { t } = useTranslation();
   const { register, setValue, handleSubmit: handleSubmitChat, control, reset } = useForm();
 
+  // * 事件总线-事件派发
   const onSubmit = useCallback((data: any) => {
     onSendPrompt({
       text: JSON.stringify(data),
@@ -250,8 +281,10 @@ const RenderUserFormInteractive = React.memo(function RenderFormInput({
     });
   }, []);
 
+  // * 回填表单项值（默认值 | 已填写值）
   useEffect(() => {
     if (interactive.type === 'userInput') {
+      // console.log('🌐 ~ useEffect ~ interactive:', interactive);
       const defaultValues = interactive.params.inputForm?.reduce(
         (acc: Record<string, any>, item) => {
           acc[item.label] = !!item.value ? item.value : item.defaultValue;
@@ -266,6 +299,8 @@ const RenderUserFormInteractive = React.memo(function RenderFormInput({
   return (
     <Flex flexDirection={'column'} gap={2} w={'250px'}>
       {interactive.params.description && <Markdown source={interactive.params.description} />}
+
+      {/* 各类需要渲染的表单项（包括：Input | textarea | numberInput | select） */}
       {interactive.params.inputForm?.map((input) => (
         <Box key={input.label}>
           <Flex mb={1} alignItems={'center'}>

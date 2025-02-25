@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { clientInitData } from '@/web/common/system/staticData';
 import { useRouter } from 'next/router';
-import { useSystemStore } from '@/web/common/system/useSystemStore';
-import type { FastGPTFeConfigsType } from '@fastgpt/global/common/system/types/index.d';
 import { useMemoizedFn, useMount } from 'ahooks';
-import { TrackEventName } from '../common/system/constants';
 import { useRequest2 } from '@fastgpt/web/hooks/useRequest';
+import type { FastGPTFeConfigsType } from '@fastgpt/global/common/system/types/index.d';
+
+import { useSystemStore } from '@/web/common/system/useSystemStore';
+import { clientInitData } from '@/web/common/system/staticData';
+import { TrackEventName } from '../common/system/constants';
 
 export const useInitApp = () => {
   const router = useRouter();
@@ -31,7 +32,7 @@ export const useInitApp = () => {
       console.log(
         '%cWelcome to FastGPT',
         'font-family:Arial; color:#3370ff ; font-size:18px; font-weight:bold;',
-        `GitHub：https://github.com/labring/FastGPT`
+        `GitHub：NinesGPT`
       );
     }
 

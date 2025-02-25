@@ -10,6 +10,11 @@ import HighlightText from '@fastgpt/web/components/common/String/HighlightText';
 import { ChatBoxContext } from '../Provider';
 import { useContextSelector } from 'use-context-selector';
 
+/**
+ * !!:: 输入引导组件（工作台-AI模型配置-输入引导）
+ * !!:: 输入引导组件（工作台-AI模型配置-输入引导）
+ * !!:: 输入引导组件（工作台-AI模型配置-输入引导）
+ */
 export default function InputGuideBox({
   appId,
   text,
